@@ -4,14 +4,20 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ibf2022.assessment.paf.batch3.models.Beer;
 import ibf2022.assessment.paf.batch3.models.Brewery;
+import ibf2022.assessment.paf.batch3.models.Order;
 import ibf2022.assessment.paf.batch3.models.Style;
 import ibf2022.assessment.paf.batch3.repositories.BeerRepository;
 
@@ -73,5 +79,16 @@ public class BeerController {
 	}
 
 	// TODO Task 5 - view 2, place order
+	@PostMapping(path = "/brewery/{breweryId}/order")
+	public ResponseEntity postOrder(
+			@ModelAttribute Order order,
+			@PathVariable String breweryId,
+			Model model) {
 
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.contentType(MediaType.TEXT_HTML)
+				.body("view3");
+
+	}
 }
