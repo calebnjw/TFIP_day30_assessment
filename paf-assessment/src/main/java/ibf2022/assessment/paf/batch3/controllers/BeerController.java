@@ -34,7 +34,7 @@ public class BeerController {
 	@GetMapping(path = "/beer/style/{styleId}")
 	public String getBeersOfStyle(
 			@PathVariable String styleId,
-			@RequestParam String styleName,
+			@RequestParam(required = true) String styleName,
 			Model model) {
 
 		List<Beer> beers = beerRepo.getBreweriesByBeer(Integer.parseInt(styleId));
@@ -43,7 +43,7 @@ public class BeerController {
 			model.addAttribute("valid", false);
 			model.addAttribute("styleName", "No beers found for this style.");
 		} else {
-			model.addAttribute("valid", false);
+			model.addAttribute("valid", true);
 			model.addAttribute("styleName", styleName);
 			model.addAttribute("beers", beers);
 		}
@@ -55,7 +55,7 @@ public class BeerController {
 	@GetMapping(path = "/brewery/{breweryId}")
 	public String getBrewery(
 			@PathVariable String breweryId,
-			@RequestParam String breweryName,
+			@RequestParam(required = false) String breweryName,
 			Model model) {
 
 		Optional<Brewery> brewery = beerRepo.getBeersFromBrewery(Integer.parseInt(breweryId));
