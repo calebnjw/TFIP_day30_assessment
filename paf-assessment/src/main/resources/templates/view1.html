@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<!-- DO NOT MODIFY THIS FILE -->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-th-text="*{styleName}"></title>
+  </head>
+  <body>
+    <h1 data-th-text="*{styleName}"></h1>
+    <a href="/">Back</a>
+    <table border="1" data-th-if="${not #lists.isEmpty(beers)}">
+      <thead>
+        <tr>
+          <th>Beer Name</th>
+          <th>Description</th>
+          <th>Brewery Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-th-each="s: ${beers}" data-th-object="${s}">
+          <td>
+            <span data-th-text="*{beerName}"></span>
+          </td>
+          <td>
+            <span data-th-text="*{beerDescription}"></span>
+          </td>
+          <td>
+            <a
+              data-th-href="@{/brewery/{id}?breweryName={breweryName}(id=*{breweryId}, breweryName=*{breweryName})}"
+            >
+              <span data-th-text="*{breweryName}"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

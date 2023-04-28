@@ -1,4 +1,4 @@
-package ibf2022.assessment.paf.batch3.repositories;
+package ibf2022.assessment.paf.batch3.mappers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

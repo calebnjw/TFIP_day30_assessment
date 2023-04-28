@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import ibf2022.assessment.paf.batch3.models.Beer;
+import ibf2022.assessment.paf.batch3.models.Brewery;
 import ibf2022.assessment.paf.batch3.models.Style;
 import ibf2022.assessment.paf.batch3.repositories.BeerRepository;
 
@@ -26,8 +30,35 @@ public class BeerController {
 	}
 
 	// TODO Task 3 - view 1
+	@GetMapping(path = "/beer/style/{styleId}")
+	public String getBeersOfStyle(
+			@PathVariable String styleId,
+			@RequestParam String styleName,
+			Model model) {
+
+		List<Beer> beers = beerRepo.getBreweriesByBeer(Integer.parseInt(styleId));
+
+		if (beers.size() == 0) {
+			model.addAttribute("styleName", "No beers found for this style.");
+		} else {
+			model.addAttribute("styleName", styleName);
+			model.addAttribute("beers", beers);
+		}
+
+		return "view1";
+	}
 
 	// TODO Task 4 - view 2
+	@GetMapping(path = "/brewery/{breweryId}")
+	public String getBrewery(
+			@PathVariable String breweryId,
+			@RequestParam String breweryName,
+			Model model) {
+
+		Brewery brewery = beerRepo.getBeersFromBrewery(Integer.parseInt(breweryId)).get();
+
+		return "view2";
+	}
 
 	// TODO Task 5 - view 2, place order
 
