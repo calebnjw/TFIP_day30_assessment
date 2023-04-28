@@ -38,6 +38,7 @@ public class Queries {
       	beers.name AS beerName,
       	beers.descript AS beerDescription
       FROM breweries
-      INNER JOIN beers ON breweries.id=beers.brewery_id AND breweries.id=?;
+      INNER JOIN beers ON breweries.id=beers.brewery_id AND breweries.id=?
+      ORDER BY beers.name ASC;
       """;
 }

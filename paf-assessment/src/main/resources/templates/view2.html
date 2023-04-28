@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<!-- DO NOT MODIFY THIS FILE -->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-th-text="*{breweryName}"></title>
+  </head>
+  <body>
+    <h1 data-th-text="*{breweryName}"></h1>
+    <a href="/">Back</a>
+    <table data-th-object="${brewery}" data-th-if="*{valid}">
+      <tbody>
+        <tr>
+          <td>Description:</td>
+          <td>
+            <span data-th-text="*{description}"></span>
+          </td>
+        </tr>
+        <tr>
+          <td>Address:</td>
+          <td>
+            <div data-th-text="*{address1}"></div>
+            <div data-th-text="*{address2}"></div>
+            <div data-th-text="*{city}"></div>
+          </td>
+        </tr>
+        <tr>
+          <td>Phone:</td>
+          <td>
+            <span data-th-text="*{phone}"></span>
+          </td>
+        </tr>
+        <tr>
+          <td>Website:</td>
+          <td>
+            <a data-th-href="*{website}">
+              <span data-th-text="*{website}"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+    <div data-th-if="*{valid}">
+      <h2>Beers</h2>
+      <input type="button" value="Place Order" />
+      <table
+        border="1"
+        data-th-object="${brewery}"
+        data-th-if="${not #lists.isEmpty(brewery.beers)}"
+      >
+        <thead>
+          <tr>
+            <th>Beer Name</th>
+            <th>Description</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-th-each="s: ${brewery.beers}" data-th-object="${s}">
+            <td>
+              <span data-th-text="*{beerName}"></span>
+            </td>
+            <td>
+              <span data-th-text="*{beerDescription}"></span>
+            </td>
+            <td>
+              <input type="number" data-th-name="*{beerId}" id="*{beerId}" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

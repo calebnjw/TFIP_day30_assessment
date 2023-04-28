@@ -1,6 +1,7 @@
 package ibf2022.assessment.paf.batch3.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,8 +40,10 @@ public class BeerController {
 		List<Beer> beers = beerRepo.getBreweriesByBeer(Integer.parseInt(styleId));
 
 		if (beers.size() == 0) {
+			model.addAttribute("valid", false);
 			model.addAttribute("styleName", "No beers found for this style.");
 		} else {
+			model.addAttribute("valid", false);
 			model.addAttribute("styleName", styleName);
 			model.addAttribute("beers", beers);
 		}
@@ -55,7 +58,16 @@ public class BeerController {
 			@RequestParam String breweryName,
 			Model model) {
 
-		Brewery brewery = beerRepo.getBeersFromBrewery(Integer.parseInt(breweryId)).get();
+		Optional<Brewery> brewery = beerRepo.getBeersFromBrewery(Integer.parseInt(breweryId));
+
+		if (brewery.isEmpty()) {
+			model.addAttribute("valid", false);
+			model.addAttribute("breweryName", "Brewery not found.");
+		} else {
+			model.addAttribute("valid", true);
+			model.addAttribute("breweryName", breweryName);
+			model.addAttribute("brewery", brewery.get());
+		}
 
 		return "view2";
 	}

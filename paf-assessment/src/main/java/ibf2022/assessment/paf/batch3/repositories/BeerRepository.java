@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import ibf2022.assessment.paf.batch3.mappers.BeerRowMapper;
+import ibf2022.assessment.paf.batch3.mappers.BreweryRowMapper;
 import ibf2022.assessment.paf.batch3.mappers.StyleRowMapper;
 import ibf2022.assessment.paf.batch3.models.Beer;
 import ibf2022.assessment.paf.batch3.models.Brewery;
@@ -43,10 +44,14 @@ public class BeerRepository {
 	public Optional<Brewery> getBeersFromBrewery(Integer breweryId) {
 		// TODO: Task 4
 
-		Brewery brewery = new Brewery();
+		List<Brewery> breweries = template.query(Queries.BREWERIES_QUERY, new BreweryRowMapper(),
+				new Object[] { breweryId });
 
-		Object results = template.queryForList(Queries.BREWERIES_QUERY, new Object[] { breweryId });
+		if (breweries.size() == 0) {
+			return Optional.empty();
+		}
 
+		Brewery brewery = breweries.get(0);
 		return Optional.of(brewery);
 	}
 }
